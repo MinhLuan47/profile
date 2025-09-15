@@ -1,4 +1,4 @@
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import type { ProfileData } from "../interfaces/profile.interface";
 
 export const profileData: ProfileData = {
@@ -7,26 +7,22 @@ export const profileData: ProfileData = {
         title: "",
         bio: "",
         avatar: "",
-        coverImage: "",
+        coverImage: ""
     },
     socialLinks: [
-        {
-            name: "GitHub",
-            url: "",
-            icon: FaGithub,
-        },
-        {
-            name: "LinkedIn",
-            url: "",
-            icon: FaLinkedin,
-        },
+        { name: "GitHub", url: "", icon: FaGithub },
+        { name: "LinkedIn", url: "", icon: FaLinkedin },
+        { name: "Twitter", url: "", icon: FaTwitter },
     ],
     skills: [
-        {
-            name: "",
-            level: 0,
-            category: "",
-        },
+        { name: "", level: 0, category: "Frontend" },
+        { name: "", level: 0, category: "Frontend" },
+        { name: "", level: 0, category: "Backend" },
+        { name: "", level: 0, category: "Backend" },
+        { name: "", level: 0, category: "Design" },
+        { name: "", level: 0, category: "DevOps" },
+        { name: "", level: 0, category: "Database" },
+        { name: "", level: 0, category: "Database" }
     ],
     projects: [
         {
@@ -36,8 +32,26 @@ export const profileData: ProfileData = {
             image: "",
             technologies: [],
             demoUrl: "",
-            githubUrl: "",
+            githubUrl: ""
         },
+        {
+            id: 2,
+            title: "",
+            description: "",
+            image: "",
+            technologies: [],
+            demoUrl: "",
+            githubUrl: ""
+        },
+        {
+            id: 3,
+            title: "",
+            description: "",
+            image: "",
+            technologies: [],
+            demoUrl: "",
+            githubUrl: ""
+        }
     ],
     experiences: [
         {
@@ -46,8 +60,16 @@ export const profileData: ProfileData = {
             company: "",
             period: "",
             description: "",
-            achievements: [],
+            achievements: ["", "", ""]
         },
+        {
+            id: 2,
+            position: "",
+            company: "",
+            period: "",
+            description: "",
+            achievements: ["", "", ""]
+        }
     ],
     education: [
         {
@@ -55,13 +77,13 @@ export const profileData: ProfileData = {
             degree: "",
             institution: "",
             period: "",
-            description: "",
-        },
+            description: ""
+        }
     ],
     contact: {
         email: "",
         phone: "",
         address: "",
-        contactFormEnabled: false,
-    },
+        contactFormEnabled: false
+    }
 };

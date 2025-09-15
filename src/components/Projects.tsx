@@ -1,4 +1,3 @@
-// components/Projects.tsx
 import { motion } from 'framer-motion';
 import React from 'react';
 import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
@@ -9,106 +8,89 @@ interface ProjectsProps {
 }
 
 const Projects: React.FC<ProjectsProps> = ({ projects }) => {
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.2
-            }
-        }
-    };
-
-    const itemVariants = {
-        hidden: { y: 50, opacity: 0 },
-        visible: {
-            y: 0,
-            opacity: 1,
-            transition: {
-                duration: 0.5
-            }
-        }
-    };
 
     return (
-        <section id="projects" className="py-16 bg-white">
-            <div className="container mx-auto px-4">
-                <motion.h2
-                    className="text-3xl font-bold text-center mb-12"
-                    initial={{ opacity: 0, y: 20 }}
+        <section id="projects" className="py-20 bg-gray-800/50">
+            <div className="max-w-6xl mx-auto px-4">
+                <motion.div
+                    initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5 }}
+                    className="text-center mb-16"
                 >
-                    Featured Projects
-                </motion.h2>
+                    <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                        Featured Projects
+                    </h2>
+                    <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-500 mx-auto"></div>
+                </motion.div>
 
-                <motion.div
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-100px" }}
-                >
-                    {projects.map((project) => (
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {projects.map((project, index) => (
                         <motion.div
                             key={project.id}
-                            className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
-                            variants={itemVariants}
-                            whileHover={{ y: -10 }}
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: index * 0.2 }}
+                            whileHover={{ y: -5 }}
+                            className="bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50 group"
                         >
-                            <div className="h-48 overflow-hidden">
-                                <motion.img
+                            <div className="relative overflow-hidden">
+                                <img
                                     src={project.image}
                                     alt={project.title}
-                                    className="w-full h-full object-cover"
-                                    whileHover={{ scale: 1.05 }}
-                                    transition={{ duration: 0.3 }}
+                                    className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
                                 />
+                                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
+                                    <div className="flex space-x-3">
+                                        {project.demoUrl && (
+                                            <motion.a
+                                                href={project.demoUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                whileHover={{ scale: 1.1 }}
+                                                whileTap={{ scale: 0.9 }}
+                                                className="p-2 bg-blue-500 rounded-full text-white hover:bg-blue-600 transition-colors"
+                                            >
+                                                <FaExternalLinkAlt size={20} />
+                                            </motion.a>
+                                        )}
+                                        {project.githubUrl && (
+                                            <motion.a
+                                                href={project.githubUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                whileHover={{ scale: 1.1 }}
+                                                whileTap={{ scale: 0.9 }}
+                                                className="p-2 bg-gray-700 rounded-full text-white hover:bg-gray-600 transition-colors"
+                                            >
+                                                <FaGithub size={20} />
+                                            </motion.a>
+                                        )}
+                                    </div>
+                                </div>
                             </div>
-
                             <div className="p-6">
-                                <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-                                <p className="text-gray-600 mb-4">{project.description}</p>
-
-                                <div className="flex flex-wrap gap-2 mb-4">
-                                    {project.technologies.map((tech, index) => (
+                                <h3 className="text-xl font-semibold mb-3 text-gray-200">
+                                    {project.title}
+                                </h3>
+                                <p className="text-gray-400 mb-4 leading-relaxed">
+                                    {project.description}
+                                </p>
+                                <div className="flex flex-wrap gap-2">
+                                    {project.technologies.map((tech) => (
                                         <span
-                                            key={index}
-                                            className="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full"
+                                            key={tech}
+                                            className="px-3 py-1 bg-blue-500/10 text-blue-400 rounded-full text-sm border border-blue-500/20"
                                         >
                                             {tech}
                                         </span>
                                     ))}
                                 </div>
-
-                                <div className="flex space-x-4">
-                                    {project.githubUrl && (
-                                        <a
-                                            href={project.githubUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex items-center text-gray-700 hover:text-blue-600 transition-colors"
-                                        >
-                                            <FaGithub className="mr-1" /> Code
-                                        </a>
-                                    )}
-
-                                    {project.demoUrl && (
-                                        <a
-                                            href={project.demoUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex items-center text-gray-700 hover:text-blue-600 transition-colors"
-                                        >
-                                            <FaExternalLinkAlt className="mr-1" /> Live Demo
-                                        </a>
-                                    )}
-                                </div>
                             </div>
                         </motion.div>
                     ))}
-                </motion.div>
+                </div>
             </div>
         </section>
     );

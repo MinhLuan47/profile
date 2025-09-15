@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import React, { useState } from 'react';
-import { FaEnvelope, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
+import { FaMailBulk, FaMapPin, FaPhone } from 'react-icons/fa';
 import type { IContact } from '../interfaces/profile.interface';
 
 
@@ -9,171 +9,144 @@ interface ContactProps {
 }
 
 const Contact: React.FC<ContactProps> = ({ contact }) => {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        message: ''
-    });
+    const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleContactSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle form submission here
-        console.log('Form submitted:', formData);
+        console.log('Form submitted:', contactForm);
         alert('Thank you for your message! I will get back to you soon.');
-        setFormData({ name: '', email: '', message: '' });
-    };
 
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.2
-            }
-        }
-    };
-
-    const itemVariants = {
-        hidden: { y: 20, opacity: 0 },
-        visible: {
-            y: 0,
-            opacity: 1
-        }
+        setContactForm({ name: '', email: '', message: '' });
     };
 
     return (
-        <section id="contact" className="py-16 bg-gray-50">
-            <div className="container mx-auto px-4">
-                <motion.h2
-                    className="text-3xl font-bold text-center mb-12"
-                    initial={{ opacity: 0, y: 20 }}
+        <section id="contact" className="py-20 bg-gray-800/50">
+            <div className="max-w-6xl mx-auto px-4">
+                <motion.div
+                    initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5 }}
+                    className="text-center mb-16"
                 >
-                    Get In Touch
-                </motion.h2>
+                    <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                        Get In Touch
+                    </h2>
+                    <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-500 mx-auto mb-6"></div>
+                    <p className="text-gray-400 max-w-2xl mx-auto">
+                        I'm always interested in hearing about new opportunities and exciting projects.
+                        Let's create something amazing together!
+                    </p>
+                </motion.div>
 
-                <motion.div
-                    className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8"
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                >
-                    <motion.div variants={itemVariants}>
-                        <h3 className="text-xl font-semibold mb-6">Contact Information</h3>
+                <div className="grid lg:grid-cols-2 gap-12">
+                    {/* Contact Info */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="space-y-8"
+                    >
+                        <div className="flex items-center space-x-4 p-4 bg-gray-800/50 backdrop-blur-sm rounded-lg border border-gray-700/50">
+                            <div className="p-3 bg-blue-500/10 rounded-full">
+                                <FaMailBulk className="text-blue-400" size={24} />
+                            </div>
+                            <div>
+                                <h4 className="font-semibold text-gray-200">Email</h4>
+                                <p className="text-gray-400">{contact.email}</p>
+                            </div>
+                        </div>
 
-                        <div className="space-y-4">
-                            <div className="flex items-start">
-                                <div className="bg-blue-100 p-3 rounded-full mr-4">
-                                    <FaEnvelope className="text-blue-600" />
+                        {contact.phone && (
+                            <div className="flex items-center space-x-4 p-4 bg-gray-800/50 backdrop-blur-sm rounded-lg border border-gray-700/50">
+                                <div className="p-3 bg-green-500/10 rounded-full">
+                                    <FaPhone className="text-green-400" size={24} />
                                 </div>
                                 <div>
-                                    <h4 className="font-medium">Email</h4>
-                                    <a href={`mailto:${contact.email}`} className="text-gray-600 hover:text-blue-600 transition-colors">
-                                        {contact.email}
-                                    </a>
+                                    <h4 className="font-semibold text-gray-200">Phone</h4>
+                                    <p className="text-gray-400">{contact.phone}</p>
                                 </div>
                             </div>
+                        )}
 
-                            {contact.phone && (
-                                <div className="flex items-start">
-                                    <div className="bg-blue-100 p-3 rounded-full mr-4">
-                                        <FaPhone className="text-blue-600" />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-medium">Phone</h4>
-                                        <a href={`tel:${contact.phone}`} className="text-gray-600 hover:text-blue-600 transition-colors">
-                                            {contact.phone}
-                                        </a>
-                                    </div>
+                        {contact.address && (
+                            <div className="flex items-center space-x-4 p-4 bg-gray-800/50 backdrop-blur-sm rounded-lg border border-gray-700/50">
+                                <div className="p-3 bg-purple-500/10 rounded-full">
+                                    <FaMapPin className="text-purple-400" size={24} />
                                 </div>
-                            )}
-
-                            {contact.address && (
-                                <div className="flex items-start">
-                                    <div className="bg-blue-100 p-3 rounded-full mr-4">
-                                        <FaMapMarkerAlt className="text-blue-600" />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-medium">Location</h4>
-                                        <p className="text-gray-600">{contact.address}</p>
-                                    </div>
+                                <div>
+                                    <h4 className="font-semibold text-gray-200">Location</h4>
+                                    <p className="text-gray-400">{contact.address}</p>
                                 </div>
-                            )}
-                        </div>
+                            </div>
+                        )}
                     </motion.div>
 
+                    {/* Contact Form */}
                     {contact.contactFormEnabled && (
-                        <motion.div variants={itemVariants}>
-                            <h3 className="text-xl font-semibold mb-6">Send Me a Message</h3>
-
-                            <form onSubmit={handleSubmit} className="space-y-4">
+                        <motion.div
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                        >
+                            <form onSubmit={handleContactSubmit} className="space-y-6">
                                 <div>
-                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
                                         Name
                                     </label>
                                     <input
                                         type="text"
                                         id="name"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
+                                        value={contactForm.name}
+                                        onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
                                         required
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent text-white placeholder-gray-400"
+                                        placeholder="Your name"
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                                         Email
                                     </label>
                                     <input
                                         type="email"
                                         id="email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
+                                        value={contactForm.email}
+                                        onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
                                         required
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                                        className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent text-white placeholder-gray-400"
+                                        placeholder="your.email@example.com"
                                     />
                                 </div>
 
                                 <div>
-                                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
                                         Message
                                     </label>
                                     <textarea
                                         id="message"
-                                        name="message"
-                                        rows={4}
-                                        value={formData.message}
-                                        onChange={handleChange}
+                                        value={contactForm.message}
+                                        onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
                                         required
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                                    ></textarea>
+                                        rows={6}
+                                        className="w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent text-white placeholder-gray-400 resize-none"
+                                        placeholder="Tell me about your project..."
+                                    />
                                 </div>
 
                                 <motion.button
                                     type="submit"
-                                    className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
-                                    whileHover={{ scale: 1.02 }}
+                                    whileHover={{ scale: 1.02, y: -2 }}
                                     whileTap={{ scale: 0.98 }}
+                                    className="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-300"
                                 >
                                     Send Message
                                 </motion.button>
                             </form>
                         </motion.div>
                     )}
-                </motion.div>
+                </div>
             </div>
         </section>
     );

@@ -1,90 +1,106 @@
 import { motion } from 'framer-motion';
 import React from 'react';
-import type { IExperience } from '../interfaces/profile.interface';
+import { FaBriefcase, FaGraduationCap } from 'react-icons/fa';
+import type { IEducation, IExperience } from '../interfaces/profile.interface';
 
 
 interface ExperiencesProps {
     experiences: IExperience[];
+    education: IEducation[];
 }
 
-const Experiences: React.FC<ExperiencesProps> = ({ experiences }) => {
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.2
-            }
-        }
-    };
+const Experiences: React.FC<ExperiencesProps> = ({ experiences, education }) => {
 
-    const itemVariants = {
-        hidden: { x: -50, opacity: 0 },
-        visible: {
-            x: 0,
-            opacity: 1,
-            transition: {
-                duration: 0.5
-            }
-        }
-    };
 
     return (
-        <section id="experience" className="py-16 bg-gray-50">
-            <div className="container mx-auto px-4">
-                <motion.h2
-                    className="text-3xl font-bold text-center mb-12"
-                    initial={{ opacity: 0, y: 20 }}
+        <section id="experience" className="py-20">
+            <div className="max-w-6xl mx-auto px-4">
+                <motion.div
+                    initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5 }}
+                    className="text-center mb-16"
                 >
-                    Work Experience
-                </motion.h2>
+                    <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                        Experience & Education
+                    </h2>
+                    <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-500 mx-auto"></div>
+                </motion.div>
 
-                <motion.div
-                    className="max-w-3xl mx-auto"
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                >
-                    {experiences.map((exp) => (
-                        <motion.div
-                            key={exp.id}
-                            className="mb-12 relative"
-                            variants={itemVariants}
-                        >
-                            {/* Timeline dot */}
-                            <div className="absolute left-0 h-4 w-4 rounded-full bg-blue-500 border-4 border-white shadow-md -translate-x-1/2"></div>
-
-                            <div className="ml-10">
-                                <div className="bg-white p-6 rounded-xl shadow-sm">
-                                    <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
-                                        <div>
-                                            <h3 className="text-xl font-semibold">{exp.position}</h3>
-                                            <p className="text-blue-600 font-medium">{exp.company}</p>
+                <div className="grid lg:grid-cols-2 gap-12">
+                    {/* Experience */}
+                    <div>
+                        <h3 className="text-2xl font-semibold mb-8 flex items-center text-gray-200">
+                            <FaBriefcase className="mr-3 text-blue-400" />
+                            Work Experience
+                        </h3>
+                        <div className="space-y-8">
+                            {experiences.map((exp, index) => (
+                                <motion.div
+                                    key={exp.id}
+                                    initial={{ opacity: 0, x: -50 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: index * 0.2 }}
+                                    className="relative pl-8 border-l-2 border-blue-400/30"
+                                >
+                                    <div className="absolute w-4 h-4 bg-blue-400 rounded-full -left-2 top-0"></div>
+                                    <div className="bg-gray-800/50 backdrop-blur-sm rounded-lg p-6 border border-gray-700/50">
+                                        <h4 className="text-xl font-semibold text-gray-200 mb-2">
+                                            {exp.position}
+                                        </h4>
+                                        <div className="flex items-center text-blue-400 mb-2">
+                                            <span className="font-medium">{exp.company}</span>
+                                            <span className="mx-2">•</span>
+                                            <span>{exp.period}</span>
                                         </div>
-                                        <span className="text-gray-500 mt-2 md:mt-0">{exp.period}</span>
-                                    </div>
-
-                                    <p className="text-gray-600 mb-4">{exp.description}</p>
-
-                                    {exp.achievements && exp.achievements.length > 0 && (
-                                        <div>
-                                            <h4 className="font-medium mb-2">Key Achievements:</h4>
-                                            <ul className="list-disc list-inside space-y-1 text-gray-600">
+                                        <p className="text-gray-400 mb-4">{exp.description}</p>
+                                        {exp.achievements && (
+                                            <ul className="list-disc list-inside space-y-1 text-gray-300">
                                                 {exp.achievements.map((achievement, i) => (
-                                                    <li key={i}>{achievement}</li>
+                                                    <li key={i} className="text-sm">{achievement}</li>
                                                 ))}
                                             </ul>
+                                        )}
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Education */}
+                    <div>
+                        <h3 className="text-2xl font-semibold mb-8 flex items-center text-gray-200">
+                            <FaGraduationCap className="mr-3 text-blue-400" />
+                            Education
+                        </h3>
+                        <div className="space-y-8">
+                            {education.map((edu, index) => (
+                                <motion.div
+                                    key={edu.id}
+                                    initial={{ opacity: 0, x: 50 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: index * 0.2 }}
+                                    className="relative pl-8 border-l-2 border-purple-400/30"
+                                >
+                                    <div className="absolute w-4 h-4 bg-purple-400 rounded-full -left-2 top-0"></div>
+                                    <div className="bg-gray-800/50 backdrop-blur-sm rounded-lg p-6 border border-gray-700/50">
+                                        <h4 className="text-xl font-semibold text-gray-200 mb-2">
+                                            {edu.degree}
+                                        </h4>
+                                        <div className="flex items-center text-purple-400 mb-2">
+                                            <span className="font-medium">{edu.institution}</span>
+                                            <span className="mx-2">•</span>
+                                            <span>{edu.period}</span>
                                         </div>
-                                    )}
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
-                </motion.div>
+                                        <p className="text-gray-400">{edu.description}</p>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     );
